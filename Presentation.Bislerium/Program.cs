@@ -14,7 +14,7 @@ namespace Presentation.Bislerium
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +66,11 @@ namespace Presentation.Bislerium
 
             // Dependency Injection
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IBlogService, BlogService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<IReactionService, ReactionService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+
 
             var app = builder.Build();
 
@@ -91,6 +96,7 @@ namespace Presentation.Bislerium
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.Run();
+            return Task.CompletedTask;
         }
     }
 }
