@@ -11,5 +11,7 @@ namespace Application.Bislerium
     public interface IFirebaseService
     {
         public Task<FirebaseToken> CreateNewToken(CreateToken payload);
+
+        public Task SendPushNotifications(IEnumerable<string> userIds, string title, string body);
     }
 }

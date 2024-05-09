@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Bislerium.Migrations
 {
     /// <inheritdoc />
-    public partial class stg : Migration
+    public partial class finalmigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,6 +49,25 @@ namespace Infrastructure.Bislerium.Migrations
                     table.PrimaryKey("PK_Blog", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Blog_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FirebaseToken",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FirebaseToken", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FirebaseToken_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "ID",
@@ -144,7 +163,7 @@ namespace Infrastructure.Bislerium.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "ID", "Email", "Image", "IsActive", "IsDeleted", "Password", "Role", "UserName" },
-                values: new object[] { new Guid("e42f073a-3d73-4ffe-8ca9-7c9881b0f860"), "admin@gmail.com", "", true, false, "$2a$11$1o.nvR8GlzWAe6VxCFhzsekqXD66RedG6nnIVyvYDiI7drE7eT3V6", 0, "admin" });
+                values: new object[] { new Guid("47a93e97-dfae-44cf-8014-f98a805b74e3"), "admin@gmail.com", "", true, false, "$2a$11$iVmonMkqllOkJLdlQ8.xxuW8sVogItsuY3lIfeTvZKCIIgBoKuFyy", 0, "Admin Ripesh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Blog_UserID",
@@ -159,6 +178,11 @@ namespace Infrastructure.Bislerium.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_UserID",
                 table: "Comment",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FirebaseToken_UserID",
+                table: "FirebaseToken",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -185,6 +209,9 @@ namespace Infrastructure.Bislerium.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FirebaseToken");
+
             migrationBuilder.DropTable(
                 name: "Notification");
 

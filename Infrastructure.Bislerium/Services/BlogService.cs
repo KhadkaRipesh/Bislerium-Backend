@@ -22,12 +22,14 @@ namespace Infrastructure.Bislerium.Services
     {
         private readonly ApplicationDBContext _dbContext;
         private readonly IUserService userService;
+        private readonly IFirebaseService _firebaseService;
         private readonly string _environment;
 
-        public BlogService(ApplicationDBContext dbContext, IUserService userService)
+        public BlogService(ApplicationDBContext dbContext, IUserService userService, IFirebaseService firebaseService)
         {
             _dbContext = dbContext;
             this.userService = userService;
+            this._firebaseService = firebaseService;
             _environment = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"); ;
         }
 
@@ -74,6 +76,10 @@ namespace Infrastructure.Bislerium.Services
 
             _dbContext.Blogs.Update(blog);
             await _dbContext.SaveChangesAsync();
+
+            // Send push notification to Admin
+
+            await _firebaseService.SendPushNotifications(new List<string> { "A072D4AF-6D46-42B0-9BFB-E9DD9AB9BAC0" }, "Test", "This is test notification");
 
             return blog;
         }

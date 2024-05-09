@@ -44,10 +44,10 @@ namespace Infrastructure.Bislerium
             {
                 ID=Guid.NewGuid(),
                 Role = UserRole.ADMIN,
-                UserName = "admin",
+                UserName = "Admin Ripesh",
                 Email = "admin@gmail.com",
             };
-            user.Password = BCrypt.Net.BCrypt.HashPassword("password");
+            user.Password = BCrypt.Net.BCrypt.HashPassword("admin");
             builder.Entity<User>().HasData(user);
         }
         public DbSet<User> Users { get; set; }

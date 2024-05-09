@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Bislerium.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240507112030_stg")]
-    partial class stg
+    [Migration("20240509134737_finalmigrate")]
+    partial class finalmigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,6 +103,25 @@ namespace Infrastructure.Bislerium.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Domain.Bislerium.Models.FirebaseToken", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("FirebaseToken");
                 });
 
             modelBuilder.Entity("Domain.Bislerium.Models.Notification", b =>
@@ -210,14 +229,14 @@ namespace Infrastructure.Bislerium.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("e42f073a-3d73-4ffe-8ca9-7c9881b0f860"),
+                            ID = new Guid("47a93e97-dfae-44cf-8014-f98a805b74e3"),
                             Email = "admin@gmail.com",
                             Image = "",
                             IsActive = true,
                             IsDeleted = false,
-                            Password = "$2a$11$1o.nvR8GlzWAe6VxCFhzsekqXD66RedG6nnIVyvYDiI7drE7eT3V6",
+                            Password = "$2a$11$iVmonMkqllOkJLdlQ8.xxuW8sVogItsuY3lIfeTvZKCIIgBoKuFyy",
                             Role = 0,
-                            UserName = "admin"
+                            UserName = "Admin Ripesh"
                         });
                 });
 
@@ -247,6 +266,17 @@ namespace Infrastructure.Bislerium.Migrations
                         .IsRequired();
 
                     b.Navigation("Blog");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Bislerium.Models.FirebaseToken", b =>
+                {
+                    b.HasOne("Domain.Bislerium.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

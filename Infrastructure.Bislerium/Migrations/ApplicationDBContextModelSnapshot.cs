@@ -226,14 +226,14 @@ namespace Infrastructure.Bislerium.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("a072d4af-6d46-42b0-9bfb-e9dd9ab9bac0"),
+                            ID = new Guid("47a93e97-dfae-44cf-8014-f98a805b74e3"),
                             Email = "admin@gmail.com",
                             Image = "",
                             IsActive = true,
                             IsDeleted = false,
-                            Password = "$2a$11$JntQgaO133Fx6yLefSEAQ.xx6Y11QErRnB8F9/hbFtbGoWXhvjANi",
+                            Password = "$2a$11$iVmonMkqllOkJLdlQ8.xxuW8sVogItsuY3lIfeTvZKCIIgBoKuFyy",
                             Role = 0,
-                            UserName = "admin"
+                            UserName = "Admin Ripesh"
                         });
                 });
 
