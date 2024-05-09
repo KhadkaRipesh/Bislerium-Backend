@@ -70,6 +70,7 @@ namespace Presentation.Bislerium
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddScoped<IReactionService, ReactionService>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<IFirebaseService, FirebaseService>();
 
 
             var app = builder.Build();

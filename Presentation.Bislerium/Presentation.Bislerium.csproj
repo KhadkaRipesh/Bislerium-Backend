@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="FirebaseCredentials\firebase-adminsdk.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -21,6 +25,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="FirebaseCredentials\firebase-adminsdk.json" />
   </ItemGroup>
 
 </Project>

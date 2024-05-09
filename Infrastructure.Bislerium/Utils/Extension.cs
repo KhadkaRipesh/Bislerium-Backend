@@ -64,6 +64,15 @@ namespace Infrastructure.Bislerium.Utils
             };
         }
 
+        public static FirebaseToken ToFirebaseToken(this  CreateToken firebaseTokenDto)
+        {
+            return new FirebaseToken
+            {
+                Token = firebaseTokenDto.Token,
+                UserID = firebaseTokenDto.UserID
+            };
+        }
+
 
     }
 }

@@ -55,5 +55,6 @@ namespace Infrastructure.Bislerium
         public DbSet<Reaction> Reactions { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<FirebaseToken> FirebaseTokens { get; set; }
     }
 }
