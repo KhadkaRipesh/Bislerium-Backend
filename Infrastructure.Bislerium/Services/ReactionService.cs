@@ -20,14 +20,16 @@ namespace Infrastructure.Bislerium.Services
         private readonly IBlogService blogService;
         private readonly ICommentService commentService;
         private readonly INotificationService notificationService;
+        private readonly IFirebaseService firebaseService;
 
-        public ReactionService(ApplicationDBContext dbContext, IUserService userServices, IBlogService blogService, ICommentService commentService, INotificationService notificationService)
+        public ReactionService(ApplicationDBContext dbContext, IUserService userServices, IBlogService blogService, ICommentService commentService, INotificationService notificationService, IFirebaseService firebaseService)
         {
             this._dbContext = dbContext;
             this.userServices = userServices;
             this.blogService = blogService;
             this.commentService = commentService;
             this.notificationService = notificationService;
+            this.firebaseService = firebaseService;
         }
 
 
@@ -59,9 +61,13 @@ namespace Infrastructure.Bislerium.Services
                     CreateNotification notificationDto = new CreateNotification
                     {
                         Body = $"{user.UserName} reacted on your post",
-                        UserID = user.ID
+                        UserID = blog.UserID,
                     };
                     await notificationService.AddNewNotification(notificationDto);
+
+                    // Send push notification
+                     await firebaseService.SendPushNotifications(new List<string> { blog.UserID.ToString() }, "Bislerium", $"{user.UserName} reacted on your post");
+
                 }
 
                 return existingReaction;
@@ -93,9 +99,15 @@ namespace Infrastructure.Bislerium.Services
                     CreateNotification notificationDto = new CreateNotification
                     {
                         Body = $"{user.UserName} reacted on your post",
-                        UserID = user.ID
+                        UserID = blog.UserID
                     };
                     await notificationService.AddNewNotification(notificationDto);
+
+                    // Send push notification
+                    await firebaseService.SendPushNotifications(new List<string> { blog.UserID.ToString() }, "Bislerium", $"{user.UserName} reacted on your post");
+
+
+
                 }
                 return reaction;
             }

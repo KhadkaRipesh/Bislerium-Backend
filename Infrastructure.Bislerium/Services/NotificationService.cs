@@ -43,10 +43,15 @@ namespace Infrastructure.Bislerium.Services
             return notification;
         }
 
-        // Get All Notification
+        // Get my All Notification
         public async Task<IEnumerable<Notification>> GetAllNotifications()
         {
-            IEnumerable<Notification> notifications = await _dbContext.Notifications.Where(c => c.IsActive && !c.IsDeleted).ToListAsync();
+            User? user = await userServices.GetCurrentUser();
+            if (user == null)
+                throw new ProgramException("Please Login Before Adding Notification.");
+
+
+            IEnumerable<Notification> notifications = await _dbContext.Notifications.Where(c => c.UserID == user.ID && c.IsActive && !c.IsDeleted).ToListAsync();
             return notifications;
         }
 

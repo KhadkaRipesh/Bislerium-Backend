@@ -79,7 +79,7 @@ namespace Infrastructure.Bislerium.Services
 
             // Send push notification to Admin
 
-            await _firebaseService.SendPushNotifications(new List<string> { "A072D4AF-6D46-42B0-9BFB-E9DD9AB9BAC0" }, "Test", "This is test notification");
+            // await _firebaseService.SendPushNotifications(new List<string> { "A072D4AF-6D46-42B0-9BFB-E9DD9AB9BAC0" }, "Test", "This is test notification");
 
             return blog;
         }

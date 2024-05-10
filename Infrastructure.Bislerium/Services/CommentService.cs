@@ -19,13 +19,15 @@ namespace Infrastructure.Bislerium.Services
         private readonly IUserService userServices;
         private readonly IBlogService blogService;
         private readonly INotificationService notificationService;
+        private readonly IFirebaseService firebaseService;
 
-        public CommentService(ApplicationDBContext dbContext, IUserService userServices, IBlogService blogService, INotificationService notificationService)
+        public CommentService(ApplicationDBContext dbContext, IUserService userServices, IBlogService blogService, INotificationService notificationService, IFirebaseService firebaseService)
         {
             this._dbContext = dbContext;
             this.userServices = userServices;
             this.blogService = blogService;
             this.notificationService = notificationService;
+            this.firebaseService = firebaseService;
         }
 
         // Add Comment
@@ -51,9 +53,13 @@ namespace Infrastructure.Bislerium.Services
                 CreateNotification notificationDto = new CreateNotification
                 {
                     Body = $"{user.UserName} comments on your post",
-                    UserID = user.ID
+                    UserID = blog.UserID
                 };
                 await notificationService.AddNewNotification(notificationDto);
+
+                // Send push notificaiton
+                await firebaseService.SendPushNotifications(new List<string> { blog.UserID.ToString() }, "Bislerium", $"{user.UserName} commented on your post.");
+
             }
 
             return comment;
